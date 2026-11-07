@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Moustapha Ndiaye, Software Developer and Product Manager.">
+<title>Moustapha Ndiaye</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column of "spec sheets" — each project is a one-page product spec with a Product / Engineering lens toggle. */
+/* Single red-and-black look, chosen on purpose for both themes. */
+:root {
+  --bg: #0b0b0c;
+  --surface: #151517;
+  --ink: #f3f3f4;
+  --muted: #a5a5ab;
+  --line: #2b2b30;
+  --accent: #e3192f;
+  --accent-soft: #2a0c10;
+  --ochre: #ff8a95;
+  --on-accent: #ffffff;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 1rem/1.6 var(--body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap {
+  max-width: 880px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 56px 72px;
+  display: grid; gap: 72px;
+}
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.label {
+  font: 500 0.72rem/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+
+/* ---------- Hero ---------- */
+.hero { display: grid; gap: 22px; }
+.status {
+  display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+  font: 500 0.78rem/1 var(--mono); color: var(--accent);
+  background: var(--accent-soft); padding: 8px 12px; border-radius: 999px;
+}
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.hero h1 { font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; line-height: 0.98; }
+.hero .roles { font: 600 clamp(1.1rem, 3vw, 1.4rem)/1.3 var(--display); color: var(--muted); }
+.hero .roles b { color: var(--ink); font-weight: 700; }
+.thesis { font-size: 1.15rem; max-width: 60ch; }
+.thesis em { font-style: normal; background: linear-gradient(transparent 62%, var(--accent-soft) 62%); }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font: 500 0.92rem/1 var(--body); text-decoration: none;
+  padding: 11px 16px; border-radius: 8px; border: 1px solid var(--line);
+  color: var(--ink); background: var(--surface); cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.hero-grid { display: grid; grid-template-columns: auto 1fr; gap: 36px; align-items: center; }
+.hero-text { display: grid; gap: 22px; min-width: 0; }
+.photo {
+  width: 220px; aspect-ratio: 4 / 5; max-width: 100%; border-radius: 14px; overflow: hidden;
+  background: var(--surface); border: 2px solid var(--accent);
+  box-shadow: 10px 10px 0 var(--accent-soft);
+  display: grid; place-items: center; position: relative;
+}
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+[hidden] { display: none !important; }
+.photo .initials { font: 800 4rem/1 var(--display); color: var(--accent); letter-spacing: -0.03em; }
+.photo .hint { position: absolute; bottom: 10px; font: 400 0.7rem/1 var(--mono); color: var(--muted); }
+.hero h1 .name { color: var(--accent); }
+.name .ch { display: inline-block; white-space: pre; }
+.typed { color: var(--ink); font-weight: 700; }
+.caret { display: inline-block; width: 3px; height: 1.1em; margin-left: 3px; vertical-align: -0.15em; background: var(--accent); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .name .ch { animation: rise .6s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 45ms); }
+  .name:hover .ch { animation: hop .5s ease both; animation-delay: calc(var(--i) * 25ms); }
+  .caret { animation: blink 1s steps(1) infinite; }
+}
+@keyframes rise { from { transform: translateY(0.35em); opacity: .15; } to { transform: none; opacity: 1; } }
+@keyframes hop { 0%,100% { transform: none; } 40% { transform: translateY(-0.12em); } }
+@keyframes blink { 50% { opacity: 0; } }
+@media (max-width: 640px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+  .photo { width: 160px; }
+}
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font: 400 0.85rem/1.4 var(--mono); color: var(--muted); }
+
+/* ---------- Section heads ---------- */
+.section { display: grid; gap: 24px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 14px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.sec-head h2 { font-size: 1.7rem; font-weight: 700; }
+
+/* ---------- Lens toggle ---------- */
+.lens { display: inline-flex; padding: 4px; border-radius: 10px; background: var(--surface); border: 1px solid var(--line); }
+.lens button {
+  font: 500 0.85rem/1 var(--body); border: 0; background: transparent; color: var(--muted);
+  padding: 9px 14px; border-radius: 7px; cursor: pointer;
+}
+.lens button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+
+/* ---------- Spec sheets ---------- */
+.specs { display: grid; gap: 20px; }
+.spec {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 26px; display: grid; gap: 18px; min-width: 0;
+}
+.spec-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 16px; align-items: baseline; }
+.spec h3 { font-size: 1.45rem; font-weight: 700; }
+.spec .where { font: 400 0.82rem/1.4 var(--mono); color: var(--muted); }
+.spec .problem { color: var(--ink); max-width: 64ch; }
+.rows { display: grid; gap: 0; border-top: 1px dashed var(--line); }
+.row {
+  display: grid; grid-template-columns: 120px 1fr; gap: 16px;
+  padding: 12px 0; border-bottom: 1px dashed var(--line);
+}
+.row > div { min-width: 0; }
+.row ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.row .label { padding-top: 4px; }
+.row.eng .label { color: var(--ochre); }
+.row.pm .label { color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 0.78rem/1 var(--mono); padding: 6px 9px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); }
+.result {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+  font-family: var(--display);
+}
+.result .num { font-size: 1.9rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1; }
+.result .txt { font: 500 0.95rem/1.4 var(--body); color: var(--muted); }
+.tag-wip { font: 500 0.72rem/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ochre); border: 1px solid currentColor; padding: 5px 8px; border-radius: 999px; }
+
+body[data-lens="pm"] .row.eng,
+body[data-lens="eng"] .row.pm { display: none; }
+
+/* ---------- Experience ---------- */
+.timeline { display: grid; gap: 0; }
+.job { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.job > div { min-width: 0; }
+.job .when { font: 400 0.82rem/1.5 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.job h3 { font-size: 1.12rem; font-weight: 700; }
+.job .org { color: var(--muted); font-size: 0.95rem; }
+.job ul { margin: 8px 0 0; padding-left: 1.1em; display: grid; gap: 4px; }
+
+/* ---------- Skills ---------- */
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; }
+.skills > div { display: grid; gap: 10px; align-content: start; }
+
+/* ---------- Beyond ---------- */
+.beyond { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.beyond > div { display: grid; gap: 6px; align-content: start; padding-top: 14px; border-top: 2px solid var(--ink); }
+.beyond h3 { font-size: 1.05rem; font-weight: 700; }
+.beyond p { color: var(--muted); font-size: 0.95rem; }
+
+/* ---------- Contact ---------- */
+.contact { display: grid; gap: 16px; }
+.contact h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 800; }
+.email-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.email { font: 500 1rem/1 var(--mono); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); user-select: all; }
+.copied { font: 400 0.85rem/1 var(--mono); color: var(--accent); }
+footer { font: 400 0.8rem/1.5 var(--mono); color: var(--muted); }
+
+@media (max-width: 640px) {
+  .wrap { padding-block: 36px 56px; gap: 56px; }
+  .spec { padding: 20px; }
+  .row, .job { grid-template-columns: 1fr; gap: 6px; }
+  .skills, .beyond { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn, .lens button { transition: background-color .15s, border-color .15s, color .15s; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+   <div class="hero-grid">
+    <div class="photo" aria-label="Photo of Moustapha Ndiaye">
+      <!-- Put your photo at images/profile.jpg. If it is missing, your initials show instead. -->
+      <img src="images/profile.jpg" alt="Moustapha Ndiaye" onerror="this.remove(); document.getElementById('initials').hidden = false;">
+      <span class="initials" id="initials" hidden>MN</span>
+    </div>
+    <div class="hero-text">
+    <h1>Hi, I'm<br><span class="name" id="name" aria-label="Moustapha Ndiaye">Moustapha Ndiaye</span></h1>
+    <p class="roles">I'm a <span class="typed" id="typed">Software Developer</span><span class="caret" aria-hidden="true"></span><span class="sr-only">Software Developer and Product Manager</span></p>
+    <p class="thesis">I figure out what to build, then I build it. I talk to users, write clear specs, and ship working products with AI tools like Claude and Codex. Most recently I built <em>AI and web tools at Emerson Collective</em> in New York.</p>
+    <div class="links">
+      <a class="btn primary" href="https://linkedin.com/in/moustapha-ndiaye9" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Ndiayem14" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="#contact">Contact</a>
+    </div>
+    <div class="facts">
+      <span>Graduating December 2026</span>
+      <span>B.A. Computer Science · Minor in Business</span>
+      <span>Berea College</span>
+      <span>Full-tuition scholarship</span>
+    </div>
+    </div>
+   </div>
+  </header>
+
+  <section class="section" id="work" aria-labelledby="work-h">
+    <div class="sec-head">
+      <div style="display:grid;gap:8px">
+        <span class="label">Selected work</span>
+        <h2 id="work-h">Project specs</h2>
+      </div>
+      <div class="lens" role="group" aria-label="Choose a view">
+        <button type="button" id="lens-both" data-lens="both" aria-pressed="true">Both</button>
+        <button type="button" id="lens-pm" data-lens="pm" aria-pressed="false">Product</button>
+        <button type="button" id="lens-eng" data-lens="eng" aria-pressed="false">Engineering</button>
+      </div>
+    </div>
+
+    <div class="specs">
+
+      <article class="spec">
+        <div class="spec-top">
+          <h3>Resident Application Portal</h3>
+          <span class="where">Emerson Collective · Spring 2026</span>
+        </div>
+        <p class="problem">Residents needed one place to apply, show they were eligible, and get their ID verified by staff.</p>
+        <div class="rows">
+          <div class="row pm"><span class="label">Product</span><div><ul>
+            <li>Gathered requirements and turned them into a scoped MVP and a phased roadmap.</li>
+            <li>Defined the application flow, eligibility rules, and a staff review process for ID verification.</li>
+          </ul></div></div>
+          <div class="row eng"><span class="label">Engineering</span><div>
+            <div class="chips"><span class="chip">Next.js</span><span class="chip">Supabase</span><span class="chip">Vercel</span><span class="chip">Secure file storage</span></div>
+          </div></div>
+        </div>
+        <div class="result"><span class="num">&lt; 2 weeks</span><span class="txt">from requirements to a launched MVP</span></div>
+      </article>
+
+      <article class="spec">
+        <div class="spec-top">
+          <h3>AI Funding Assistant</h3>
+          <span class="where">Emerson Collective · Summer 2026</span>
+        </div>
+        <p class="problem">Legal Desk staff needed fast answers about funding opportunities without digging through Salesforce records by hand.</p>
+        <div class="rows">
+          <div class="row pm"><span class="label">Product</span><div><ul>
+            <li>Gathered requirements from the Philanthropy, Investment, and Technology teams and wrote user stories and acceptance criteria.</li>
+            <li>Set the rules: how the assistant routes questions, handles off-topic requests, and never gives legal advice.</li>
+          </ul></div></div>
+          <div class="row eng"><span class="label">Engineering</span><div>
+            <div class="chips"><span class="chip">Salesforce Agentforce</span><span class="chip">Salesforce CRM</span><span class="chip">package.xml deployment</span></div>
+            <p style="margin-top:8px">Tested answers against real records and documented test evidence for the Engineering handoff.</p>
+          </div></div>
+        </div>
+        <div class="result"><span class="num">120</span><span class="txt">real funding opportunities used to check accuracy</span></div>
+      </article>
+
+      <article class="spec">
+        <div class="spec-top">
+          <h3>AI Policy Preference Agent</h3>
+          <span class="where">Emerson Collective · Summer 2026</span>
+        </div>
+        <p class="problem">People needed a simple way to compare policy proposals and see the tradeoffs behind each one.</p>
+        <div class="rows">
+          <div class="row pm"><span class="label">Product</span><div><ul>
+            <li>Owned it from idea to launch: requirements, prompt design, and testing.</li>
+            <li>Presented the tool to technology leadership and handed it off to Engineering.</li>
+          </ul></div></div>
+          <div class="row eng"><span class="label">Engineering</span><div>
+            <div class="chips"><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL</span><span class="chip">Vercel</span><span class="chip">Claude</span><span class="chip">Codex</span></div>
+            <p style="margin-top:8px">Checked the AI's answers against the source material to catch anything invented or slanted.</p>
+          </div></div>
+        </div>
+        <div class="result"><span class="num">2 OKRs</span><span class="txt">advanced for the CRM team · 10 policy proposals compared</span></div>
+      </article>
+
+      <article class="spec">
+        <div class="spec-top">
+          <h3>SeneScholarGuide</h3>
+          <span class="tag-wip">In progress</span>
+        </div>
+        <p class="problem">Scholarship information for Senegalese and African students is scattered and hard to search, so good opportunities get missed.</p>
+        <div class="rows">
+          <div class="row pm"><span class="label">Product</span><div><ul>
+            <li>Interviewing students to learn how they search today and where they get stuck.</li>
+            <li>Defined success before building: sign-ups and apply clicks.</li>
+          </ul></div></div>
+          <div class="row eng"><span class="label">Engineering</span><div>
+            <div class="chips"><span class="chip">Claude</span><span class="chip">AI matching</span><span class="chip">Web app</span></div>
+            <p style="margin-top:8px">Building AI matching that suggests scholarships and explains why a student qualifies.</p>
+          </div></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="exp-h">
+    <div class="sec-head"><div style="display:grid;gap:8px"><span class="label">Experience</span><h2 id="exp-h">Where I've worked</h2></div></div>
+    <div class="timeline">
+      <div class="job">
+        <div class="when">Jun – Aug 2026</div>
+        <div>
+          <h3>Product Management Intern</h3>
+          <p class="org">Emerson Collective · New York, NY</p>
+          <ul>
+            <li>Turned stakeholder needs into user stories and a prioritized backlog for two AI projects in Salesforce CRM.</li>
+            <li>Handed both projects to Engineering with specs and test results, advancing 2 CRM team OKRs.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">May – Aug 2025</div>
+        <div>
+          <h3>Software Engineering Intern</h3>
+          <p class="org">Berea College · Berea, KY</p>
+          <ul>
+            <li>Built a full-stack web app with Flask, SQL, and Docker alongside 14 interns and 2 senior engineers in Agile sprints.</li>
+            <li>Designed APIs and scripts and helped set up CI/CD pipelines that shortened release cycles.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Aug 2023 – Present</div>
+        <div>
+          <h3>Information Technology Student</h3>
+          <p class="org">Berea College · Berea, KY</p>
+          <ul>
+            <li>Support 1,600+ students and staff, prioritizing requests by user impact.</li>
+            <li>Spot recurring issues with IT staff and improve helpdesk workflows and documentation.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="skills-h">
+    <div class="sec-head"><div style="display:grid;gap:8px"><span class="label">Toolkit</span><h2 id="skills-h">Skills</h2></div></div>
+    <div class="skills">
+      <div><span class="label">Product</span><div class="chips"><span class="chip">User research</span><span class="chip">Specs &amp; user stories</span><span class="chip">Backlog prioritization</span><span class="chip">Roadmapping</span><span class="chip">OKRs</span><span class="chip">UAT</span><span class="chip">Agile/Scrum</span></div></div>
+      <div><span class="label">Engineering</span><div class="chips"><span class="chip">TypeScript</span><span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Node.js</span><span class="chip">Python</span><span class="chip">Flask</span></div></div>
+      <div><span class="label">Data</span><div class="chips"><span class="chip">SQL</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Supabase</span><span class="chip">Excel</span></div></div>
+      <div><span class="label">AI &amp; tools</span><div class="chips"><span class="chip">Claude</span><span class="chip">Codex</span><span class="chip">Salesforce Agentforce</span><span class="chip">Git</span><span class="chip">Docker</span><span class="chip">Vercel</span><span class="chip">Jira</span></div></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="beyond-h">
+    <div class="sec-head"><div style="display:grid;gap:8px"><span class="label">Beyond work</span><h2 id="beyond-h">Leadership</h2></div></div>
+    <div class="beyond">
+      <div><h3>WaterForHope</h3><span class="label">Founder</span><p>Started a fundraising initiative to build wells in rural West African villages.</p></div>
+      <div><h3>Muslim Student Association</h3><span class="label">President · 2024 – Present</span><p>Lead weekly programs and organize interfaith events across campus.</p></div>
+      <div><h3>Communities</h3><span class="label">Member</span><p>ColorStack, NSBE, CodePath, and CodeTogether.</p></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <span class="label">Contact</span>
+    <h2 id="contact-h">Let's build something useful.</h2>
+    <div class="email-row">
+      <span class="email" id="email">mabsand99@gmail.com</span>
+      <button class="btn" type="button" id="copy-email">Copy email</button>
+      <span class="copied" id="copied" hidden>Copied</span>
+    </div>
+    <div class="links">
+      <a class="btn" href="https://linkedin.com/in/moustapha-ndiaye9" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="https://github.com/Ndiayem14" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <footer>Moustapha Ndiaye · Berea, KY · Open to relocating</footer>
+</div>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.lens button');
+  function setLens(v) {
+    document.body.setAttribute('data-lens', v);
+    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lens === v)); });
+    try { localStorage.setItem('lens', v); } catch (e) {}
+  }
+  buttons.forEach(function (b) { b.addEventListener('click', function () { setLens(b.dataset.lens); }); });
+  try { var saved = localStorage.getItem('lens'); if (saved) setLens(saved); } catch (e) {}
+
+  // Name: split into letters for the wave effect
+  var nameEl = document.getElementById('name');
+  var txt = nameEl.textContent; nameEl.textContent = '';
+  var i = 0;
+  txt.split(' ').forEach(function (word, wi) {
+    if (wi) nameEl.appendChild(document.createTextNode(' '));
+    var ws = document.createElement('span'); ws.style.whiteSpace = 'nowrap'; ws.setAttribute('aria-hidden', 'true');
+    word.split('').forEach(function (c) {
+      var sp = document.createElement('span'); sp.className = 'ch';
+      sp.style.setProperty('--i', i++); sp.textContent = c; ws.appendChild(sp);
+    });
+    nameEl.appendChild(ws);
+  });
+
+  // Roles: typing loop between the two titles
+  var typed = document.getElementById('typed');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  typed.setAttribute('aria-hidden', 'true');
+  if (reduce) { typed.textContent = 'Software Developer & Product Manager'; }
+  else {
+    var words = ['Software Developer', 'Product Manager'], w = 0, n = words[0].length, del = false;
+    function tick() {
+      var word = words[w];
+      if (!del && n === word.length) { del = true; return setTimeout(tick, 1800); }
+      if (del && n === 0) { del = false; w = (w + 1) % words.length; return setTimeout(tick, 300); }
+      n += del ? -1 : 1; typed.textContent = word.slice(0, n);
+      setTimeout(tick, del ? 45 : 85);
+    }
+    setTimeout(tick, 1400);
+  }
+
+  var copyBtn = document.getElementById('copy-email');
+  var msg = document.getElementById('copied');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    function selectIt() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { msg.textContent = 'Copied'; msg.hidden = false; }, function () { selectIt(); msg.textContent = 'Selected, press Ctrl+C'; msg.hidden = false; });
+    } else { selectIt(); msg.textContent = 'Selected, press Ctrl+C'; msg.hidden = false; }
+  });
+})();
+</script>
+</body>
+</html>
